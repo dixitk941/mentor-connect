@@ -1,5 +1,5 @@
 import React from 'react';
-import backgroundImage from './mentor connect_20240816_120140_0000.png';
+import backgroundImage from '../mentor connect_20240816_120140_0000.png'; // Correct relative path
 
 const Hero = () => {
   return (

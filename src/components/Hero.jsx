@@ -1,5 +1,5 @@
 import React from 'react';
-import backgroundImage from '../mentor connect_20240816_120140_0000.png'; // Ensure the path is correct
+import backgroundImage from '../assets/Hero.png'; // Ensure the path is correct
 
 const Hero = () => {
   return (

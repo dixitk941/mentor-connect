@@ -1,11 +1,10 @@
 import React from 'react';
-import backgroundImage from '../assets/Hero.png'; // Ensure the path is correct
 
 const Hero = () => {
   return (
     <div 
       className="relative bg-cover bg-center h-screen text-white flex items-center justify-center" 
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{ backgroundImage: `url('../assets/Hero.png')` }} // Directly using the path to the image
     >
       <div className="relative z-10 text-center">
         <h1 className="text-6xl font-extrabold mb-4 animate-fade-in">Welcome to Mentor Connect</h1>

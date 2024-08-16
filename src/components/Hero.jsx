@@ -7,7 +7,6 @@ const Hero = () => {
       className="relative bg-cover bg-center h-screen text-white flex items-center justify-center" 
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500 opacity-75"></div>
       <div className="relative z-10 text-center">
         <h1 className="text-6xl font-extrabold mb-4 animate-fade-in">Welcome to Mentor Connect</h1>
         <p className="text-2xl mb-8 animate-fade-in delay-1s">Connecting mentors and mentees for a brighter future.</p>

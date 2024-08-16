@@ -1,8 +1,12 @@
 import React from 'react';
+import backgroundImage from './mentor connect_20240816_120140_0000.png';
 
 const Hero = () => {
   return (
-    <div className="relative bg-cover bg-center h-screen text-white flex items-center justify-center" style={{ backgroundImage: "url('/path-to-your-background-image.jpg')" }}>
+    <div 
+      className="relative bg-cover bg-center h-screen text-white flex items-center justify-center" 
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500 opacity-75"></div>
       <div className="relative z-10 text-center">
         <h1 className="text-6xl font-extrabold mb-4 animate-fade-in">Welcome to Mentor Connect</h1>

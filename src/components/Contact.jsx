@@ -28,7 +28,7 @@ const Contact = () => {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        access_key: 'YOUR_ACCESS_KEY', // Replace with your Web3Forms access key
+        access_key: '592dd66c-e5ec-4ebe-a866-9a0a22d100f9', // Replace with your Web3Forms access key
         ...formData,
       }),
     });

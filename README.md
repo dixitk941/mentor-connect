@@ -1,6 +1,4 @@
-Here's an updated version of the `README.md` tailored to your project:
 
----
 
 # **MentorConnect - Smart India Hackathon Project 2024**
 
@@ -75,7 +73,3 @@ SIH 2024 contributes to nation-building by addressing critical challenges faced 
 
 ### **License**
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to adjust any sections or details as necessary. Best of luck with **MentorConnect** at the Smart India Hackathon 2024! 🚀

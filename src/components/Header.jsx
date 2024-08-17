@@ -8,10 +8,11 @@ const Header = () => {
       </div>
       <nav>
         <ul className="flex space-x-4">
-          <li><a href="#home" className="hover:underline drop-shadow-lg">Home</a></li>
+          <li><a href="/" className="hover:underline drop-shadow-lg">Home</a></li>
           <li><a href="#about" className="hover:underline drop-shadow-lg">About</a></li>
           <li><a href="#features" className="hover:underline drop-shadow-lg">Features</a></li>
           <li><a href="#contact" className="hover:underline drop-shadow-lg">Contact</a></li>
+          <li><a href="Mentor" className="hover:underline drop-shadow-lg">Join</a></li>
         </ul>
       </nav>
     </header>

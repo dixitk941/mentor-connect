@@ -1,21 +1,23 @@
-// src/App.js
 import React from 'react';
-import Header from './components/Header';
-import HomePage from  './pages/HomePage' // Adjust the path as necessary
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/Header'; // Ensure this path is correct
+import Mentor from './pages/Join'; // Ensure this path is correct
+import Home from './pages/HomePage'; // Ensure this path is correct
+import MentorDetail from './pages/MentorDetail';
 
-import './index.css'; // Ensure Tailwind CSS is imported
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <Router>
       <Header />
-      <main className="p-4">
-        <header className="App-header" />
-        <HomePage />
-        
-      </main>
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/mentor" element={<Mentor />} />
+        <Route path="/mentor/:id" component={MentorDetail} />
+
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

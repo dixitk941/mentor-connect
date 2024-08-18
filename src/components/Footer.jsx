@@ -77,8 +77,8 @@ export default function App() {
       © 2023 Copyright:
       <a
         className="text-neutral-800 dark:text-neutral-400"
-        href="https://tw-elements.com/"
-      >TW Elements</a>
+        href="https://neocodenex.tech"
+      >NeoCodenex</a>
     </div>
   </footer>
   );

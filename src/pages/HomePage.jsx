@@ -6,6 +6,8 @@ import Contact from '../components/Contact';
 import Footer from '../components/Footer'
 // import MentorHelpYou from '../components/MentorHelpYou'
 import MentorPage from './MentorPage';
+import CTA from '../components/CTA'
+import Mentors from '../components/Mentors'
 
 
 const App = () => {
@@ -13,8 +15,10 @@ const App = () => {
     <div>
       <Hero />
       <Features />
+      <CTA />
       <Contact />
-      <MentorPage />
+      <Mentors />
+      {/* <MentorPage /> */}
       {/* <BecomeMentee /> */}
       {/* <MentorHelpYou /> */}
       <Footer />

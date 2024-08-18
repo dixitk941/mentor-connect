@@ -1,16 +1,15 @@
 import React from "react";
 import Hero from "../components/Hero";
-import Mentors from "../components/Mentors";
+import Features from "../components/Features";
 import Footer from "../components/Footer";
 
-const TeamPage = () => {
+const FeaturesPage = () => {
     return (
         <div>
         <Hero />
-        <Mentors />
+        <Features />
         <Footer />
         </div>
     );
     }
-
-    export default TeamPage;
+    export default FeaturesPage;

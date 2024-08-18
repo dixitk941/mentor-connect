@@ -5,13 +5,19 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage'; // Import getStorage
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB0AfFZBR-BJZPSNsp11jBkhy7d3TV7rEM",
-    authDomain: "notesapp-dixitk941.firebaseapp.com",
-    projectId: "notesapp-dixitk941",
-    storageBucket: "notesapp-dixitk941.appspot.com",
-    messagingSenderId: "702011833511",
-    appId: "1:702011833511:web:e1b4a6feffeb1a37736f82",
-    measurementId: "G-P6R1JZNXHS"
+    apiKey: "AIzaSyCizZvKzTIkfG2Opd9auglD4j3xP4_4ESQ",
+
+    authDomain: "mentorconnect-36696.firebaseapp.com",
+  
+    projectId: "mentorconnect-36696",
+  
+    storageBucket: "mentorconnect-36696.appspot.com",
+  
+    messagingSenderId: "42558296287",
+  
+    appId: "1:42558296287:web:bc705c361b2a7b6f6e996a"
+  
+
 };
 
 const app = initializeApp(firebaseConfig);

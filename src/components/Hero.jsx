@@ -23,8 +23,8 @@ export default function Example() {
               <span className="sr-only">Mentor Connect</span>
               <img
                 alt=""
-                src="https://firebasestorage.googleapis.com/v0/b/mentor-connect-74cc5.appspot.com/o/Logo.png?alt=media&token=9a3674d4-df33-48c0-b324-d16bdffe91ba"
-                className="h-8 w-auto"
+                src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
+                 className="h-8 w-auto"
               />
             </a>
           </div>
@@ -59,8 +59,8 @@ export default function Example() {
                 <span className="sr-only">Mentor Connect</span>
                 <img
                   alt=""
-                  src="https://firebasestorage.googleapis.com/v0/b/mentor-connect-74cc5.appspot.com/o/Logo.png?alt=media&token=9a3674d4-df33-48c0-b324-d16bdffe91ba"
-                  className="h-8 w-auto"
+                  src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
+                      className="h-8 w-auto"
                 />
               </a>
               <button

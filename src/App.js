@@ -11,6 +11,8 @@ import AboutMentor from './components/AboutMentor';
 import FeaturesPage from './pages/FeaturesPage';
 import TeamPage from './pages/TeamPage';
 import MentorPage from './pages/MentorPage';
+import Dashboard from './pages/Dashboard';
+import MenteeDashboard from './pages/MenteeDashboard';
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/mentors" element={<MentorPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/mentee-dashboard" element={<MenteeDashboard />} />
       </Routes>
     </Router>
   );

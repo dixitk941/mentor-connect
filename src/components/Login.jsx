@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TEInput, TERipple } from "tw-elements-react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase"; // Adjust the path as necessary
+import { auth, db } from "./firebase"; // Adjust the path as necessary
+import { doc, getDoc } from "firebase/firestore";
 import Header from './Header';
 import Footer from './Footer';
 import Hero from './Hero'
@@ -19,14 +20,34 @@ export default function MentorConnectLogin(): JSX.Element {
     setError("");
     setSuccess("");
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setSuccess("Login successful! Redirecting...");
-      setTimeout(() => navigate("/dashboard"), 2000);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      // Fetch user role from Firestore
+      const mentorDoc = await getDoc(doc(db, "mentors", user.uid));
+      const menteeDoc = await getDoc(doc(db, "mentees", user.uid));
+  
+      if (mentorDoc.exists()) {
+        navigate("/mentor-dashboard");
+      } else if (menteeDoc.exists()) {
+        navigate("/mentee-dashboard");
+      } else {
+        throw new Error("User document not found");
+      }
     } catch (err) {
-      setError("Invalid credentials. Please try again or register.");
+      console.error(err.message); // Log the exact error for debugging
+      if (err.code === "auth/wrong-password" || err.code === "auth/user-not-found") {
+        setError("Invalid credentials. Please try again or register.");
+      } else if (err.message === "User document not found") {
+        setError("No account found with this email. Please register.");
+      } else if (err.message === "Role not recognized") {
+        setError("User role is not recognized. Please contact support.");
+      } else {
+        setError("An error occurred. Please try again later.");
+      }
     }
   };
-
+  
   const handleRegister = () => {
     navigate("/register");
   };
@@ -46,16 +67,16 @@ export default function MentorConnectLogin(): JSX.Element {
                     <div className="text-center">
                       <img
                         className="mx-auto w-48"
-                        src="https://firebasestorage.googleapis.com/v0/b/mentor-connect-74cc5.appspot.com/o/Logo.png?alt=media&token=9a3674d4-df33-48c0-b324-d16bdffe91ba"
-                        alt="Mentor Connect logo"
+                        src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
+                           alt="logo"
                       />
                       <h4 className="mb-12 mt-1 pb-1 text-xl font-semibold">
-                        Welcome to Mentor Connect
+                        Welcome back to Mentor Connect
                       </h4>
                     </div>
 
                     <form onSubmit={handleLogin}>
-                      <p className="mb-4">Please log in to your account</p>
+                      <p className="mb-4">Please login to your account</p>
                       {/* Email input */}
                       <TEInput
                         type="email"
@@ -64,7 +85,7 @@ export default function MentorConnectLogin(): JSX.Element {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                      ></TEInput>
+                      />
 
                       {/* Password input */}
                       <TEInput
@@ -74,10 +95,9 @@ export default function MentorConnectLogin(): JSX.Element {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                      ></TEInput>
+                      />
 
                       {error && <p className="text-red-500">{error}</p>}
-                      {success && <p className="text-green-500">{success}</p>}
 
                       {/* Submit button */}
                       <div className="mb-12 pb-1 pt-1 text-center">
@@ -87,31 +107,22 @@ export default function MentorConnectLogin(): JSX.Element {
                             type="submit"
                             style={{
                               background:
-                                "linear-gradient(to right, #0d47a1, #1976d2, #42a5f5, #64b5f6)",
+                                "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
                             }}
                           >
-                            Log in
+                            Login
                           </button>
                         </TERipple>
-
-                        {/* Forgot password link */}
-                        <a href="#!" className="text-blue-600 hover:underline">
-                          Forgot password?
-                        </a>
                       </div>
 
-                      {/* Register button */}
                       <div className="flex items-center justify-between pb-6">
                         <p className="mb-0 mr-2">Don't have an account?</p>
-                        <TERipple rippleColor="light">
-                          <button
-                            type="button"
-                            onClick={handleRegister}
-                            className="inline-block rounded border-2 border-blue-600 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-blue-600 transition duration-150 ease-in-out hover:border-blue-700 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-blue-700 focus:border-blue-700 focus:text-blue-700 focus:outline-none focus:ring-0 active:border-blue-800 active:text-blue-800 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-                          >
-                            Register
-                          </button>
-                        </TERipple>
+                        <button
+                          onClick={handleRegister}
+                          className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-100 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700"
+                        >
+                          Register
+                        </button>
                       </div>
                     </form>
                   </div>
@@ -122,19 +133,15 @@ export default function MentorConnectLogin(): JSX.Element {
                   className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
                   style={{
                     background:
-                      "linear-gradient(to right, #0d47a1, #1976d2, #42a5f5, #64b5f6)",
+                      "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
                   }}
                 >
                   <div className="px-4 py-6 text-white md:mx-6 md:p-12">
                     <h4 className="mb-6 text-xl font-semibold">
-                      Connecting Mentors with Mentees
+                      Reconnect with your Mentor or Mentee
                     </h4>
                     <p className="text-sm">
-                      Mentor Connect is your go-to platform for finding mentors
-                      and connecting with experts in your field. Whether you're
-                      looking to learn new skills, seek career guidance, or
-                      expand your professional network, Mentor Connect provides
-                      the tools and community you need to succeed.
+                      Mentor Connect provides a seamless way to log in and access your dashboard, where you can manage your mentoring relationships, track your progress, and connect with new mentors or mentees.
                     </p>
                   </div>
                 </div>
@@ -142,10 +149,8 @@ export default function MentorConnectLogin(): JSX.Element {
             </div>
           </div>
         </div>
-        
       </div>
       <Footer />
     </section>
-    
   );
 }

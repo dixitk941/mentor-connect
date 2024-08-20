@@ -1,30 +1,54 @@
-'use client'
-
-import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import React, { useState, useEffect } from 'react';
+import { Dialog } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './firebase'; // Adjust the path as necessary
 
 const navigation = [
   { name: 'Mentor', href: '/mentors' },
   { name: 'Features', href: '/features' },
   { name: 'About', href: '/about' },
   { name: 'Team', href: '/team' },
-]
+  { name: 'Dashboard', href: '/mentee-dashboard' },
+  // { name: 'Room', href: '/room' },
+  
 
-export default function Example() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+];
+
+export default function Header() {
+  const [user, setUser] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+    });
+  };
 
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
-        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Mentor Connect</span>
               <img
                 alt=""
                 src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
-                 className="h-8 w-auto"
+                className="h-8 w-auto"
               />
             </a>
           </div>
@@ -46,21 +70,26 @@ export default function Example() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
+            {user ? (
+              <button onClick={handleLogout} className="text-sm font-semibold leading-6 text-gray-900">
+                Log out
+              </button>
+            ) : (
+              <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+                Log in
+              </a>
+            )}
           </div>
         </nav>
-        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-          <div className="fixed inset-0 z-50" />
-          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+          <Dialog.Panel focus="true" className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
               <a href="/" className="-m-1.5 p-1.5">
                 <span className="sr-only">Mentor Connect</span>
                 <img
                   alt=""
                   src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
-                      className="h-8 w-auto"
+                  className="h-8 w-auto"
                 />
               </a>
               <button
@@ -79,23 +108,26 @@ export default function Example() {
                     <a
                       key={item.name}
                       href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                     >
                       {item.name}
                     </a>
                   ))}
                 </div>
                 <div className="py-6">
-                  <a
-                    href="/login"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Log in
-                  </a>
+                  {user ? (
+                    <button onClick={handleLogout} className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
+                      Log out
+                    </button>
+                  ) : (
+                    <a href="/login" className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
+                      Log in
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
-          </DialogPanel>
+          </Dialog.Panel>
         </Dialog>
       </header>
 

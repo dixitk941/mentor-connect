@@ -1,31 +1,25 @@
-import React from 'react';
-import Hero from '../components/Hero'; 
-import Features from '../components/Features';
-import Contact from '../components/Contact';
-// import BecomeMentee from '../components/JoinAsMentee';
-import Footer from '../components/Footer'
-// import MentorHelpYou from '../components/MentorHelpYou'
-import MentorPage from './MentorPage';
-import CTA from '../components/CTA'
-import Mentors from '../components/Mentors'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MenteeForm from '../components/MenteeForm';
+import MentorSearch from '../components/MentorSearch';
+import Header from '../components/Header'
 
+const MenteeDashboard = () => {
+  const [menteeDetails, setMenteeDetails] = useState(null);
+  const navigate = useNavigate();
 
-const App = () => {
+  const handleMentorSelect = (mentor) => {
+    navigate(`/mentor-profile/${mentor.id}`, { state: { mentor } });
+  };
+
   return (
-    <div>
-      <Hero />
-      <Features />
-      <CTA />
-      <Contact />
-      <Mentors />
-      {/* <MentorPage /> */}
-      {/* <BecomeMentee /> */}
-      {/* <MentorHelpYou /> */}
-      <Footer />
-
-      {/* Other components */}
+    <div className="p-8 space-y-8">
+      <Header />
+     
+      {!menteeDetails && <MenteeForm setMenteeDetails={setMenteeDetails} />}
+      {menteeDetails && <MentorSearch menteeDetails={menteeDetails} onMentorSelect={handleMentorSelect} />}
     </div>
   );
 };
 
-export default App;
+export default MenteeDashboard;

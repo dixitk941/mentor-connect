@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase'; // Ensure db is properly imported
 import { v4 as uuidv4 } from 'uuid';
 import emailjs from 'emailjs-com';
 
 const MentorProfile = () => {
   const { state } = useLocation();
-  const { mentor } = state; 
+  const { mentorId } = state; // Assuming mentorId is passed via location state
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
@@ -16,6 +16,25 @@ const MentorProfile = () => {
   const [time, setTime] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [mentor, setMentor] = useState(null);
+
+  useEffect(() => {
+    // Fetch mentor details from Firestore
+    const fetchMentor = async () => {
+      try {
+        const mentorDoc = await getDoc(doc(db, 'mentors', mentorId));
+        if (mentorDoc.exists()) {
+          setMentor(mentorDoc.data());
+        } else {
+          console.error('No such document!');
+        }
+      } catch (error) {
+        console.error('Error fetching mentor:', error);
+      }
+    };
+
+    fetchMentor();
+  }, [mentorId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +45,7 @@ const MentorProfile = () => {
     const mentorLink = `${meetingBaseUrl}${roomId}R`;
 
     try {
-      const menteeEmail = email; 
-      const mentorEmail = mentor.email; 
+      if (!mentor) throw new Error('Mentor data is not available');
 
       // Store meeting details in Firestore
       await addDoc(collection(db, 'meetings'), {
@@ -41,7 +59,7 @@ const MentorProfile = () => {
           mentorProfile: mentor,
         },
         mentor: {
-          email: mentorEmail,
+          email: mentor.email,
           meetingLink: mentorLink,
           menteeDetails: {
             fullName,
@@ -55,14 +73,13 @@ const MentorProfile = () => {
 
       // Send emails with the meeting links
       const emailParams = {
-        mentee_email: menteeEmail,
-        mentor_email: mentorEmail,
+        mentee_email: email,
+        mentor_email: mentor.email,
         mentee_link: menteeLink,
-        mentor_link: mentorLink,
+        mentor_link: mentorLink
       };
 
       await emailjs.send('service_1spo0b8', 'template_cmzswxc', emailParams, '2mradEnYwVyRRLCbt');
-      
 
       setMessage('Meeting scheduled successfully.');
       setError('');
@@ -73,6 +90,10 @@ const MentorProfile = () => {
       console.error('Error scheduling meeting:', error);
     }
   };
+
+  if (!mentor) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="relative isolate px-6 pt-14 lg:px-8">

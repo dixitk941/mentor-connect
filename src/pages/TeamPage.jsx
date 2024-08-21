@@ -41,7 +41,7 @@ export const teamMembers = [
     {
       name: 'Mayank',
       role: 'QA & Testing',
-      imgSrc: 'https://example.com/mayank.png', // Replace with actual image URL
+      imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mayank.jpg?alt=media&token=3d6bad89-5307-4af1-a250-9ae175be403d', // Replace with actual image URL
       socialLinks: {
         facebook: '#',
         twitter: '#',

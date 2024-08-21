@@ -16,13 +16,14 @@ const MentorProfile = () => {
   const [time, setTime] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [menteeLink, setMenteeLink] = useState('');  // Add state to hold the menteeLink
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const roomId = uuidv4();
     const meetingBaseUrl = 'https://yourapp.com/meeting-room?link=';
-    const menteeLink = `${meetingBaseUrl}${roomId}`;
+    const generatedMenteeLink = `${meetingBaseUrl}${roomId}`;
     const mentorLink = `${meetingBaseUrl}${roomId}R`;
 
     try {
@@ -37,7 +38,7 @@ const MentorProfile = () => {
           mobileNumber,
           date,
           time,
-          meetingLink: menteeLink,
+          meetingLink: generatedMenteeLink,
           mentorProfile: mentor,
         },
         mentor: {
@@ -53,16 +54,18 @@ const MentorProfile = () => {
         },
       });
 
+      // Update the menteeLink state
+      setMenteeLink(generatedMenteeLink);
+
       // Send emails with the meeting links
       const emailParams = {
         mentee_email: menteeEmail,
         mentor_email: mentorEmail,
-        mentee_link: menteeLink,
+        mentee_link: generatedMenteeLink,
         mentor_link: mentorLink,
       };
 
       await emailjs.send('service_1spo0b8', 'template_cmzswxc', emailParams, '2mradEnYwVyRRLCbt');
-      
 
       setMessage('Meeting scheduled successfully.');
       setError('');
@@ -83,6 +86,9 @@ const MentorProfile = () => {
           <p className="text-lg"><span className="font-semibold text-gray-700">Name:</span> {mentor.name}</p>
           <p className="text-lg"><span className="font-semibold text-gray-700">Expertise:</span> {mentor.expertise}</p>
           <p className="text-lg"><span className="font-semibold text-gray-700">Bio:</span> {mentor.bio}</p>
+          {menteeLink && ( // Render the menteeLink only if it's available
+            <p className="text-lg"><span className="font-semibold text-gray-700">Meeting Link:</span> <a href={menteeLink} target="_blank" rel="noopener noreferrer" className="text-blue-500">{menteeLink}</a></p>
+          )}
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

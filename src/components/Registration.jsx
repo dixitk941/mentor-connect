@@ -84,8 +84,7 @@ const handlePhotoUpload = (e) => {
                     <div className="text-center">
                       <img
                         className="mx-auto w-48"
-                        src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
-                        alt="logo"
+                        src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"   alt="logo"
                       />
                       <h4 className="mb-12 mt-1 pb-1 text-xl font-semibold">
                         Welcome to Mentor Connect

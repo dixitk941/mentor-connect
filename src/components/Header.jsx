@@ -41,13 +41,13 @@ export default function Header() {
         <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
             <a href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Mentor Connect</span>
-              <img
-                alt=""
-                src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
-                className="h-8 w-auto"
-              />
-            </a>
+            <span className="sr-only">Mentor Connect</span>
+            <img
+              alt="Mentor Connect Logo"
+              src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"
+              style={{ width: '25%' }}
+            />
+          </a>
           </div>
           <div className="flex lg:hidden">
             <button
@@ -85,8 +85,7 @@ export default function Header() {
                 <span className="sr-only">Mentor Connect</span>
                 <img
                   alt=""
-                  src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
-                  className="h-8 w-auto"
+                  src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"   className="h-8 w-auto"
                 />
               </a>
               <button

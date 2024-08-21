@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from './firebase'; // Adjust the path as necessary
+import { useLocation } from 'react-router-dom';
+import { auth } from './firebase'; // Adjust the path as necessary
 
 const navigation = [
   { name: 'Mentor', href: '/mentors' },
@@ -11,15 +11,13 @@ const navigation = [
   { name: 'About', href: '/about' },
   { name: 'Team', href: '/team' },
   { name: 'Dashboard', href: '/mentee-dashboard' },
-  // { name: 'Room', href: '/room' },
-  { name: 'Lobby', href: '/lobby'},
-  
-
+  { name: 'Lobby', href: '/lobby' },
 ];
 
 export default function Header() {
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -39,6 +37,25 @@ export default function Header() {
     });
   };
 
+  const renderHeroContent = () => {
+    switch (location.pathname) {
+      case '/mentors':
+        return <h1>Welcome to the Mentors Page</h1>;
+      case '/features':
+        return <h1>Discover Our Features</h1>;
+      case '/about':
+        return <h1>About Us</h1>;
+      case '/team':
+        return <h1>Meet Our Team</h1>;
+      case '/mentee-dashboard':
+        return <h1>Your Dashboard</h1>;
+      case '/lobby':
+        return <h1>Welcome to the Lobby</h1>;
+      default:
+        return <h1>Welcome to Mentor Connect</h1>;
+    }
+  };
+
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -47,9 +64,9 @@ export default function Header() {
             <a href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Mentor Connect</span>
               <img
-                alt=""
-                src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
-                className="h-8 w-auto"
+                alt="Mentor Connect Logo"
+                src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"
+                style={{ width: '25%' }}
               />
             </a>
           </div>
@@ -89,7 +106,7 @@ export default function Header() {
                 <span className="sr-only">Mentor Connect</span>
                 <img
                   alt=""
-                  src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mentor_20240818_131407_0000.png?alt=media&token=8c4652a1-4a11-4c26-ae3d-c6de12daef56"
+                  src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"
                   className="h-8 w-auto"
                 />
               </a>
@@ -156,11 +173,9 @@ export default function Header() {
             </div>
           </div>
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Welcome to Mentor Connect
-            </h1>
+            {renderHeroContent()}
             <p className="mt-6 text-lg leading-8 text-gray-600">
-            Connecting mentors and mentees for a brighter future.
+            Connecting Minds, Shaping Futures.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
@@ -189,5 +204,5 @@ export default function Header() {
         </div>
       </div>
     </div>
-  )
+  );
 }

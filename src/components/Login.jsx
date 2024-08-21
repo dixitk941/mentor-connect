@@ -80,7 +80,7 @@ export default function MentorConnectLogin(): JSX.Element {
                       {/* Email input */}
                       <TEInput
                         type="email"
-                        label="Email"
+                        placeholder="Email"
                         className="mb-4"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -90,7 +90,7 @@ export default function MentorConnectLogin(): JSX.Element {
                       {/* Password input */}
                       <TEInput
                         type="password"
-                        label="Password"
+                        placeholder="Password"
                         className="mb-4"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

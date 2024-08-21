@@ -23,7 +23,7 @@ const MentorProfile = () => {
 
     const roomId = uuidv4();
     const meetingBaseUrl = 'https://yourapp.com/meeting-room?link=';
-    const generatedMenteeLink = `${meetingBaseUrl}${roomId}`;
+    const menteeLink = `${meetingBaseUrl}${roomId}`;
     const mentorLink = `${meetingBaseUrl}${roomId}R`;
 
     try {

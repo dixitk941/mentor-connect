@@ -12,6 +12,7 @@ const navigation = [
   { name: 'Team', href: '/team' },
   { name: 'Dashboard', href: '/mentee-dashboard' },
   // { name: 'Room', href: '/room' },
+  { name: 'Lobby', href: '/lobby'},
   
 
 ];

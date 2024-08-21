@@ -1,62 +1,55 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import Header from '../components/Header'
+import { useNavigate } from 'react-router-dom';
+import Hero from '../components/Hero';
+
 const Lobby = () => {
   const [username, setUsername] = useState('');
   const [meetingLink, setMeetingLink] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username && meetingLink) {
-      history.push(`/meeting-room?username=${username}&link=${meetingLink}`);
+      navigate(`/meeting-room?username=${username}&link=${meetingLink}`);
     } else {
       alert('Please enter both username and meeting link.');
     }
   };
 
   return (
-
     <div>
-        <Header />
-    
-    <div className="flex items-center justify-center h-screen bg-gray-900">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">Join Meeting</h2>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your username"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="meetingLink">
-            Meeting Link
-          </label>
-          <input
-            type="text"
-            id="meetingLink"
-            value={meetingLink}
-            onChange={(e) => setMeetingLink(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter the meeting link"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Join Meeting
-        </button>
-      </form>
-    </div>
+      <Hero />
+      <div className="flex items-center justify-center h-screen bg-gray-900">
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold mb-4">Join Meeting</h2>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Username:</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Meeting Link:</label>
+            <input
+              type="text"
+              value={meetingLink}
+              onChange={(e) => setMeetingLink(e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
+          >
+            Join Meeting
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

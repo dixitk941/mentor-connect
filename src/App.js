@@ -14,7 +14,8 @@ import MentorPage from './pages/MentorPage';
 import Dashboard from './pages/Dashboard';
 import MenteeDashboard from './pages/MenteeDashboard';
 import MentorProfile from './components/MentorProfile';
-import Room from './pages/Room'
+import Room from './pages/Room';
+import Loby from './pages/Loby';
 
 
 const App = () => {
@@ -35,6 +36,8 @@ const App = () => {
         <Route path="/mentee-dashboard" element={<MenteeDashboard />} />
         <Route path="/mentor-profile/:id" element={<MentorProfile />} />
         <Route path="/room" element={<Room />} />
+        <Route path="/lobby" element={<Loby />} />
+
 
       </Routes>
     </Router>

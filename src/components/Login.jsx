@@ -1,55 +1,52 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { TEInput, TERipple } from "tw-elements-react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "./firebase"; // Adjust the path as necessary
-import { doc, getDoc } from "firebase/firestore";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from './firebase'; // Adjust the path as necessary
+import { doc, getDoc } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
-import Hero from './Hero'
+import Hero from './Hero';
 
-export default function MentorConnectLogin(): JSX.Element {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+export default function MentorConnectLogin() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
+    setError('');
+    setSuccess('');
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
+
       // Fetch user role from Firestore
-      const mentorDoc = await getDoc(doc(db, "mentors", user.uid));
-      const menteeDoc = await getDoc(doc(db, "mentees", user.uid));
-  
+      const mentorDoc = await getDoc(doc(db, 'mentors', user.uid));
+      const menteeDoc = await getDoc(doc(db, 'mentees', user.uid));
+
       if (mentorDoc.exists()) {
-        navigate("/mentor-dashboard");
+        navigate(`/mentor-dashboard/${user.uid}`);
       } else if (menteeDoc.exists()) {
-        navigate("/mentee-dashboard");
+        navigate(`/mentee-dashboard/${user.uid}`);
       } else {
-        throw new Error("User document not found");
+        throw new Error('User document not found');
       }
     } catch (err) {
       console.error(err.message); // Log the exact error for debugging
-      if (err.code === "auth/wrong-password" || err.code === "auth/user-not-found") {
-        setError("Invalid credentials. Please try again or register.");
-      } else if (err.message === "User document not found") {
-        setError("No account found with this email. Please register.");
-      } else if (err.message === "Role not recognized") {
-        setError("User role is not recognized. Please contact support.");
+      if (err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+        setError('Invalid credentials. Please try again or register.');
+      } else if (err.message === 'User document not found') {
+        setError('No account found with this email. Please register.');
       } else {
-        setError("An error occurred. Please try again later.");
+        setError('An error occurred. Please try again later.');
       }
     }
   };
-  
+
   const handleRegister = () => {
-    navigate("/register");
+    navigate('/register');
   };
 
   return (
@@ -60,14 +57,13 @@ export default function MentorConnectLogin(): JSX.Element {
           <div className="w-full">
             <div className="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
               <div className="g-0 lg:flex lg:flex-wrap">
-                {/* Left column container */}
                 <div className="px-4 md:px-0 lg:w-6/12">
                   <div className="md:mx-6 md:p-12">
-                    {/* Logo */}
                     <div className="text-center">
                       <img
                         className="mx-auto w-48"
-                        src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"     alt="logo"
+                        src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"
+                        alt="logo"
                       />
                       <h4 className="mb-12 mt-1 pb-1 text-xl font-semibold">
                         Welcome back to Mentor Connect
@@ -76,8 +72,7 @@ export default function MentorConnectLogin(): JSX.Element {
 
                     <form onSubmit={handleLogin}>
                       <p className="mb-4">Please login to your account</p>
-                      {/* Email input */}
-                      <TEInput
+                      <input
                         type="email"
                         placeholder="Email"
                         className="mb-4"
@@ -85,9 +80,7 @@ export default function MentorConnectLogin(): JSX.Element {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                       />
-
-                      {/* Password input */}
-                      <TEInput
+                      <input
                         type="password"
                         placeholder="Password"
                         className="mb-4"
@@ -98,21 +91,16 @@ export default function MentorConnectLogin(): JSX.Element {
 
                       {error && <p className="text-red-500">{error}</p>}
 
-                      {/* Submit button */}
-                      <div className="mb-12 pb-1 pt-1 text-center">
-                        <TERipple rippleColor="light" className="w-full">
-                          <button
-                            className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-                            type="submit"
-                            style={{
-                              background:
-                                "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
-                            }}
-                          >
-                            Login
-                          </button>
-                        </TERipple>
-                      </div>
+                      <button
+                        type="submit"
+                        className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                        style={{
+                          background:
+                            'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
+                        }}
+                      >
+                        Login
+                      </button>
 
                       <div className="flex items-center justify-between pb-6">
                         <p className="mb-0 mr-2">Don't have an account?</p>
@@ -127,12 +115,11 @@ export default function MentorConnectLogin(): JSX.Element {
                   </div>
                 </div>
 
-                {/* Right column container with background and description */}
                 <div
                   className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
                   style={{
                     background:
-                      "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
+                      'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
                   }}
                 >
                   <div className="px-4 py-6 text-white md:mx-6 md:p-12">

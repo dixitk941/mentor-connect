@@ -8,6 +8,7 @@ import Footer from '../components/Footer'
 import MentorPage from './MentorPage';
 import CTA from '../components/CTA'
 import Mentors from '../components/Mentors'
+// import Dashboard from './mentor/Dashboard'
 
 
 const App = () => {
@@ -17,10 +18,11 @@ const App = () => {
       <Features />
       <CTA />
       <Contact />
-      <Mentors />
+      <Mentors /> 
       {/* <MentorPage /> */}
       {/* <BecomeMentee /> */}
       {/* <MentorHelpYou /> */}
+      {/* <Dashboard /> */}
       <Footer />
 
       {/* Other components */}

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from './firebase'; // Ensure db is properly imported
+import { db } from './firebase';
 import { v4 as uuidv4 } from 'uuid';
 import emailjs from 'emailjs-com';
+import { MenteeContext } from '../context/MenteeContext';
 
 const MentorProfile = () => {
   const { state } = useLocation();
-  const { mentor } = state; 
+  const { mentor } = state;
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
@@ -16,7 +17,9 @@ const MentorProfile = () => {
   const [time, setTime] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const [menteeLink, setMenteeLink] = useState('');  // Add state to hold the menteeLink
+  const [menteeLink, setMenteeLink] = useState('');
+
+  const { menteeId } = useContext(MenteeContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,12 +30,12 @@ const MentorProfile = () => {
     const mentorLink = `${meetingBaseUrl}${roomId}R`;
 
     try {
-      const menteeEmail = email; 
-      const mentorEmail = mentor.email; 
+      const menteeEmail = email;
+      const mentorEmail = mentor.email;
 
-      // Store meeting details in Firestore
       await addDoc(collection(db, 'meetings'), {
         mentee: {
+          id: menteeId,
           fullName,
           email,
           mobileNumber,
@@ -54,10 +57,8 @@ const MentorProfile = () => {
         },
       });
 
-      // Update the menteeLink state
       setMenteeLink(generatedMenteeLink);
 
-      // Send emails with the meeting links
       const emailParams = {
         mentee_email: menteeEmail,
         mentor_email: mentorEmail,
@@ -71,9 +72,13 @@ const MentorProfile = () => {
       setError('');
       console.log('Meeting created and emails sent successfully');
     } catch (error) {
-      setError('Error scheduling meeting: ' + error.message);
-      setMessage('');
       console.error('Error scheduling meeting:', error);
+      if (error.response && error.response.data) {
+        setError('Error scheduling meeting: ' + error.response.data.message);
+      } else {
+        setError('An unexpected error occurred. Please try again later.');
+      }
+      setMessage('');
     }
   };
 
@@ -86,7 +91,7 @@ const MentorProfile = () => {
           <p className="text-lg"><span className="font-semibold text-gray-700">Name:</span> {mentor.name}</p>
           <p className="text-lg"><span className="font-semibold text-gray-700">Expertise:</span> {mentor.expertise}</p>
           <p className="text-lg"><span className="font-semibold text-gray-700">Bio:</span> {mentor.bio}</p>
-          {menteeLink && ( // Render the menteeLink only if it's available
+          {menteeLink && (
             <p className="text-lg"><span className="font-semibold text-gray-700">Meeting Link:</span> <a href={menteeLink} target="_blank" rel="noopener noreferrer" className="text-blue-500">{menteeLink}</a></p>
           )}
         </div>

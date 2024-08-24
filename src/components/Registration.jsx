@@ -23,8 +23,7 @@ export default function ExampleV2(): JSX.Element {
   const [field, setField] = useState('');
   const [bio, setBio] = useState('');
   const [availability, setAvailability] = useState(null);
-  const [date, setDate] = useState(new Date()); // Add this line
-  // const [field, setField] = useState('');
+  const [date, setDate] = useState(new Date());
 
   const [experienceYears, setExperienceYears] = useState('');
   const [skills, setSkills] = useState([]);
@@ -41,7 +40,6 @@ export default function ExampleV2(): JSX.Element {
     { value: 'engineering', label: 'Engineering' },
     { value: 'medicine', label: 'Medicine' },
     { value: 'arts', label: 'Arts' },
-    // Add more options as needed
   ];
 
   const handleRegister = async (e) => {
@@ -208,27 +206,18 @@ export default function ExampleV2(): JSX.Element {
                             required
                           />
 
-{/* <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dateTime">
-              Date and Time
-            </label>
-            <DateTimePicker
-              onChange={setDate}
-              value={date}
-              className="w-full border border-gray-300 rounded-md p-2"
-            />
-          </div> */}
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="field">
-              Field
-            </label>
-            <CreatableSelect
-              isClearable
-              onChange={(newValue) => setField(newValue)}
-              options={fieldOptions}
-              className="w-full"
-            />
-          </div>
+                          <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="field">
+                              Field
+                            </label>
+                            <CreatableSelect
+                              isClearable
+                              onChange={(newValue) => setField(newValue)}
+                              options={fieldOptions}
+                              className="w-full"
+                            />
+                          </div>
+
                           <TEInput
                             type="number"
                             placeholder="Years of Experience"
@@ -249,7 +238,6 @@ export default function ExampleV2(): JSX.Element {
                                 { value: 'JavaScript', label: 'JavaScript' },
                                 { value: 'React', label: 'React' },
                                 { value: 'Node.js', label: 'Node.js' },
-                                // Add more skill options as needed
                               ]}
                               value={skills}
                             />
@@ -274,34 +262,38 @@ export default function ExampleV2(): JSX.Element {
                       <div className="mb-12 pb-1 pt-1 text-center">
                         <TERipple rippleColor="light" className="w-full">
                           <button
-                            className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(                              (0,0,0,0.1)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.1)] focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.1)]"
+                            className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.3),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.3),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.3),0_4px_18px_0_rgba(0,0,0,0.2)]"
                             type="submit"
+                            data-te-ripple-init
+                            data-te-ripple-color="light"
+                            style={{
+                              background: 'linear-gradient(to right, #000000, #0f0f0f, #242424, #333333)',
+                            }}
                           >
                             Register
                           </button>
                         </TERipple>
-                      </div>
 
-                      <div className="flex items-center justify-between pb-6">
-                        <p className="mb-0 mr-2 text-black dark:text-white">Already have an account?</p>
-                        <TERipple rippleColor="light" className="inline-block">
-                          <button
-                            type="button"
-                            className="inline-block rounded border-2 border-blue-600 px-6 pb-2 pt-2 text-xs font-medium uppercase leading-normal text-blue-600 transition duration-150 ease-in-out hover:bg-neutral-500 hover:bg-opacity-10 focus:outline-none focus:ring-0"
-                            onClick={handleLogin}
-                          >
-                            Log In
-                          </button>
-                        </TERipple>
+                        <a
+                          className="text-white cursor-pointer"
+                          onClick={handleLogin}
+                        >
+                          Already have an account? Log in
+                        </a>
                       </div>
                     </form>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-blue-600 to-green-400 lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none p-12 text-white">
-                  <div className="text-center lg:text-left">
+                <div
+                  className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
+                  style={{
+                    background: 'linear-gradient(to right, #000000, #0f0f0f, #242424, #333333)',
+                  }}
+                >
+                  <div className="px-4 py-6 text-white md:mx-6 md:p-12">
                     <h4 className="mb-6 text-xl font-semibold">We are more than just a company</h4>
-                    <p className="mb-6">
-                      Mentor Connect is a platform that bridges the gap between mentors and mentees. Join us to grow, learn, and achieve your career goals.
+                    <p className="text-sm">
+                      Mentor Connect is a platform designed to help mentees connect with mentors in various fields of expertise. Whether you're looking for career guidance, skill development, or industry insights, Mentor Connect is here to support your journey.
                     </p>
                   </div>
                 </div>
@@ -314,4 +306,3 @@ export default function ExampleV2(): JSX.Element {
     </section>
   );
 }
-

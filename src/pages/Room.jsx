@@ -1,12 +1,12 @@
-import React from 'react';
-import MeetingRoom from '../components/MeetingRoom';
+// import React from 'react';
+// import MeetingRoom from '../components/MeetingRoom';
 
-function App() {
-  return (
-    <div className="App">
-      <MeetingRoom />
-    </div>
-  );
-}
+// function App() {
+//   return (
+//     <div className="App">
+//       <MeetingRoom />
+//     </div>
+//   );
+// }
 
-export default App;
+// export default App;

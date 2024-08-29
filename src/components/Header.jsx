@@ -1,25 +1,28 @@
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { auth } from './firebase'; // Adjust the path as necessary
 import React, { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { onAuthStateChanged, signOut, getAuth } from 'firebase/auth';
-import { auth } from './firebase'; // Adjust the path as necessary
 
 const navigation = [
   { name: 'Mentor', href: '/mentors' },
   { name: 'Features', href: '/features' },
   { name: 'About', href: '/about' },
   { name: 'Team', href: '/team' },
-  { name: 'Dashboard', href: '/mentee-dashboard' },
+  { name: 'Dashboard', href: '/sdashboards' },
+  { name: 'Lobby', href: '/lobby' },
 ];
 
 export default function Header() {
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [confirmLogoutOpen, setConfirmLogoutOpen] = useState(false);
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Set up the Firebase Auth state listener
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
       } else {
@@ -27,26 +30,32 @@ export default function Header() {
       }
     });
 
-    return () => {
-      unsubscribe(); // Cleanup listener on component unmount
-    };
+    return () => unsubscribe();
   }, []);
 
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      // Clear authentication state
-      const firebaseAuth = getAuth();
-      firebaseAuth.currentUser = null;
-      
-      // Optionally, clear other Firebase settings or instances
-      // e.g., firebase.firestore().terminate() if using Firestore
-      // This may not be necessary, but you can add more clean-up code if needed
+  const handleLogout = async () => {
+    await signOut(auth);
+    setUser(null);
+    navigate('/login');
+  };
 
-      // Redirect to the login page after logout
-      window.location.href = '/login';
-    }).catch((error) => {
-      console.error('Logout error:', error);
-    });
+  const renderHeroContent = () => {
+    switch (location.pathname) {
+      case '/mentors':
+        return <h1>Welcome to the Mentors Page</h1>;
+      case '/features':
+        return <h1>Discover Our Features</h1>;
+      case '/about':
+        return <h1>About Us</h1>;
+      case '/team':
+        return <h1>Meet Our Team</h1>;
+      case '/mentee-dashboard':
+        return <h1>Your Dashboard</h1>;
+      case '/lobby':
+        return <h1>Welcome to the Lobby</h1>;
+      default:
+        return <h1>Welcome to Mentor Connect</h1>;
+    }
   };
 
   return (
@@ -82,98 +91,40 @@ export default function Header() {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {user ? (
-              <button onClick={() => setConfirmLogoutOpen(true)} className="text-sm font-semibold leading-6 text-gray-900">
-                Log out
+              <button onClick={() => setLogoutDialogOpen(true)} className="text-sm font-semibold text-gray-900">
+                Logout
               </button>
             ) : (
-              <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
-                Log in
+              <a href="/login" className="text-sm font-semibold text-gray-900">
+                Login
               </a>
             )}
+            <Dialog open={logoutDialogOpen} onClose={() => setLogoutDialogOpen(false)}>
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg">
+                  <Dialog.Title className="text-lg font-bold">Confirm Logout</Dialog.Title>
+                  <Dialog.Description className="mt-2">
+                    Are you sure you want to logout?
+                  </Dialog.Description>
+                  <div className="mt-4 flex justify-end space-x-2">
+                    <button
+                      onClick={() => setLogoutDialogOpen(false)}
+                      className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleLogout}
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Dialog>
           </div>
         </nav>
-
-        {/* Mobile menu */}
-        <Dialog open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
-          <Dialog.Panel focus="true" className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
-            <div className="flex items-center justify-between">
-              <a href="/" className="-m-1.5 p-1.5">
-                <span className="sr-only">Mentor Connect</span>
-                <img
-                  alt=""
-                  src="https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/logo-removebg-preview(1).png?alt=media&token=9f7a18b4-d8b7-4fb3-a48c-b6fbdf65aa0a"
-                  className="h-8 w-auto"
-                />
-              </a>
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-                <div className="py-6">
-                  {user ? (
-                    <button
-                      onClick={() => setConfirmLogoutOpen(true)}
-                      className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                    >
-                      Log out
-                    </button>
-                  ) : (
-                    <a
-                      href="/login"
-                      className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                    >
-                      Log in
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Dialog.Panel>
-        </Dialog>
-
-        {/* Logout Confirmation Dialog */}
-        <Dialog open={confirmLogoutOpen} onClose={() => setConfirmLogoutOpen(false)}>
-          <Dialog.Panel className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50 p-6">
-            <div className="bg-white rounded-lg p-6 shadow-md">
-              <h3 className="text-lg font-semibold">Confirm Logout</h3>
-              <p className="mt-2 text-sm">Are you sure you want to log out?</p>
-              <div className="mt-4 flex justify-end space-x-4">
-                <button
-                  type="button"
-                  onClick={() => setConfirmLogoutOpen(false)}
-                  className="text-sm font-semibold text-gray-500"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="text-sm font-semibold text-blue-600"
-                >
-                  Log out
-                </button>
-              </div>
-            </div>
-          </Dialog.Panel>
-        </Dialog>
       </header>
     </div>
   );

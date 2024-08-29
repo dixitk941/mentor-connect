@@ -13,8 +13,9 @@ import TeamPage from './pages/TeamPage';
 import MentorPage from './pages/MentorPage';
 import Dashboard from './pages/mentor/Dashboard';
 import MenteeDashboard from './pages/MenteeDashboard';
+import SDashboard from './pages/SDashboard';
 import MentorProfile from './components/MentorProfile';
-import Room from './pages/Room';
+// import Room from './pages/Room';
 import Loby from './pages/Loby';
 
 const App = () => {
@@ -34,9 +35,10 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/mentee-dashboard/:menteeId" element={<MenteeDashboard />} />
           <Route path="/mentor-profile/:id" element={<MentorProfile />} />
-          <Route path="/room/:meetingId" element={<Room />} />
+          {/* <Route path="/room/:meetingId" element={<Room />} /> */}
           <Route path="/lobby" element={<Loby />} />
           <Route path="/mentor-dashboard/:mentorId" element={<Dashboard />} />
+          <Route path="/sdashboards" element={<SDashboard />} />
         </Routes>
       </Router>
     </MenteeProvider>

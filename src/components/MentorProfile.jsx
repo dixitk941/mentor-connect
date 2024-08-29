@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import { v4 as uuidv4 } from 'uuid';
 import emailjs from 'emailjs-com';
 import { MenteeContext } from '../context/MenteeContext';
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 
 const MentorProfile = () => {
   const { state } = useLocation();
@@ -18,149 +18,155 @@ const MentorProfile = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [menteeLink, setMenteeLink] = useState('');
+  const [roomID, setRoomID] = useState('');
 
   const { menteeId } = useContext(MenteeContext);
 
+  const generateMeetingLink = () => {
+    const appID = 1748192658;
+    const serverSecret = "d6408c4eaa4e991d1416039e57c49e10";
+    const generatedRoomID = roomID || Math.random().toString(36).substring(2, 7);
+    const userID = Math.random().toString(36).substring(2, 7);
+    const userName = "userName" + userID;
+    const generatedKitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, generatedRoomID, userID, userName);
+
+    setRoomID(generatedRoomID);
+    return `https://mcmeetingroom.vercel.app/?roomID=${generatedRoomID}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const roomId = uuidv4();
-    const meetingBaseUrl = 'https://mentor-connect-sigma.vercel.app/room/?link=';
-    const generatedMenteeLink = `${meetingBaseUrl}${roomId}`;
-    const mentorLink = `${meetingBaseUrl}${roomId}R`;
-
     try {
-      const menteeEmail = email;
-      const mentorEmail = mentor.email;
+      const meetingLink = generateMeetingLink();
+      setMenteeLink(meetingLink);
 
-      await addDoc(collection(db, 'meetings'), {
-        mentee: {
-          id: menteeId,
-          fullName,
-          email,
-          mobileNumber,
-          date,
-          time,
-          meetingLink: generatedMenteeLink,
-          mentorProfile: mentor,
-        },
-        mentor: {
-          email: mentorEmail,
-          meetingLink: mentorLink,
-          menteeDetails: {
-            fullName,
-            email,
-            mobileNumber,
-            date,
-            time,
-          },
-        },
+      await addDoc(collection(db, 'appointments'), {
+        fullName,
+        email,
+        mobileNumber,
+        date,
+        time,
+        message,
+        mentorId: mentor.id,
+        menteeId,
+        roomID,
+        menteeLink: meetingLink,
       });
 
-      setMenteeLink(generatedMenteeLink);
-
-      const emailParams = {
-        mentee_email: menteeEmail,
-        mentor_email: mentorEmail,
-        mentee_link: generatedMenteeLink,
-        mentor_link: mentorLink,
+      const templateParams = {
+        to_name: fullName,
+        to_email: email,
+        message: `Your meeting link: ${meetingLink}`,
       };
 
-      await emailjs.send('service_1spo0b8', 'template_cmzswxc', emailParams, '2mradEnYwVyRRLCbt');
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams, 'YOUR_USER_ID')
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+        }, (err) => {
+          console.log('FAILED...', err);
+        });
 
-      setMessage('Meeting scheduled successfully.');
       setError('');
-      console.log('Meeting created and emails sent successfully');
-    } catch (error) {
-      console.error('Error scheduling meeting:', error);
-      if (error.response && error.response.data) {
-        setError('Error scheduling meeting: ' + error.response.data.message);
-      } else {
-        setError('An unexpected error occurred. Please try again later.');
-      }
+      setFullName('');
+      setEmail('');
+      setMobileNumber('');
+      setDate('');
+      setTime('');
       setMessage('');
+    } catch (e) {
+      setError('Error adding document: ' + e.message);
     }
   };
 
   return (
-    <div className="relative isolate px-6 pt-14 lg:px-8">
+    <div className="bg-gray-100 min-h-screen">
       <Header />
-      <div className="max-w-lg mx-auto mt-8 p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Schedule Meeting</h2>
-        <div className="space-y-2 mb-6">
-          <p className="text-lg"><span className="font-semibold text-gray-700">Name:</span> {mentor.name}</p>
-          <p className="text-lg"><span className="font-semibold text-gray-700">Expertise:</span> {mentor.expertise}</p>
-          <p className="text-lg"><span className="font-semibold text-gray-700">Bio:</span> {mentor.bio}</p>
-          {menteeLink && (
-            <p className="text-lg"><span className="font-semibold text-gray-700">Meeting Link:</span> <a href={menteeLink} target="_blank" rel="noopener noreferrer" className="text-blue-500">{menteeLink}</a></p>
-          )}
+      <div className="container mx-auto p-6">
+        <h2 className="text-3xl font-bold text-center mb-8">Mentor Profile</h2>
+        <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-800">Mentor Details</h3>
+          <p className="text-gray-700"><strong>Name:</strong> {mentor.name}</p>
+          <p className="text-gray-700"><strong>Email:</strong> {mentor.email}</p>
+          <p className="text-gray-700"><strong>Expertise:</strong> {mentor.expertise}</p>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Full Name:</label>
-            <input 
-              type="text" 
-              value={fullName} 
-              onChange={(e) => setFullName(e.target.value)} 
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
+        <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-6">
+          <div className="grid grid-cols-1 gap-6">
+            <div>
+              <label className="block text-gray-700 font-bold">Full Name</label>
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-bold">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-bold">Mobile Number</label>
+              <input
+                type="text"
+                value={mobileNumber}
+                onChange={(e) => setMobileNumber(e.target.value)}
+                required
+                className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-bold">Date</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-bold">Time</label>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+                className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-bold">Message</label>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+                className="w-full mt-2 p-3 border rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
+              ></textarea>
+            </div>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email:</label>
-            <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Mobile Number:</label>
-            <input 
-              type="tel" 
-              value={mobileNumber} 
-              onChange={(e) => setMobileNumber(e.target.value)} 
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Date:</label>
-            <input 
-              type="date" 
-              value={date} 
-              onChange={(e) => setDate(e.target.value)} 
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Time:</label>
-            <input 
-              type="time" 
-              value={time} 
-              onChange={(e) => setTime(e.target.value)} 
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
+          <button
+            type="submit"
+            className="w-full mt-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition duration-300 ease-in-out"
           >
-            Schedule Meeting
+            Submit
           </button>
         </form>
-        {message && <p className="mt-4 text-green-500">{message}</p>}
-        {error && <p className="mt-4 text-red-500">{error}</p>}
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        {menteeLink && (
+          <p className="text-center mt-8">
+            Meeting Link:{' '}
+            <a href={menteeLink} className="text-blue-500 underline">
+              {menteeLink}
+            </a>
+          </p>
+        )}
       </div>
     </div>
   );

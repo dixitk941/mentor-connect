@@ -19,7 +19,7 @@ export const teamMembers = [
     {
       name: 'Pratick',
       role: 'Graphic Design and Firebase Manager',
-      imgSrc: 'https://example.com/pratick.png', // Replace with actual image URL
+      imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/pratick.jpg?alt=media&token=f377a1ad-f4db-4552-af3e-fd668f41cb87', // Replace with actual image URL
       socialLinks: {
         facebook: '#',
         twitter: '#',
@@ -30,7 +30,7 @@ export const teamMembers = [
     {
       name: 'Dushyant',
       role: 'Backend Developer',
-      imgSrc: 'https://example.com/dushyant.png', // Replace with actual image URL
+      imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/photos%2FKRffhU0fnHUnsEKmIb8Q7gpEjQa2?alt=media&token=3d40af58-eda4-4011-9a9a-38eb72a196bb', // Replace with actual image URL
       socialLinks: {
         facebook: '#',
         twitter: '#',
@@ -52,7 +52,18 @@ export const teamMembers = [
     {
       name: 'Laxman',
       role: 'Documentation & Presentation',
-      imgSrc: 'https://example.com/laxman.png', // Replace with actual image URL
+      imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/photos%2FPgXWKjB1erSJHjvOkl3mhMDcE1g1?alt=media&token=ed84e562-ba64-4c8b-b36b-25de3158558b', // Replace with actual image URL
+      socialLinks: {
+        facebook: '#',
+        twitter: '#',
+        linkedin: '#',
+        instagram: '#',
+      },
+    },
+    {
+      name: 'Pratibha',
+      role: 'Documentation & Presentation',
+      imgSrc: 'https://photos.google.com/search/_cAF1QipMuVuXyYk~uLx38W8pydQ9IAq13muWcuZQ_/photo/AF1QipNWZDlgBrYlLLd4j7m-XhRqd-3VzEFUem9xB4s', // Replace with actual image URL
       socialLinks: {
         facebook: '#',
         twitter: '#',

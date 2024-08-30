@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { auth } from './firebase'; // Adjust the path as necessary
 
 const navigation = [
-  { name: 'Home' , href: '/home' },
+  { name: 'Home' , href: '/' },
   { name: 'Mentor', href: '/mentors' },
   { name: 'Features', href: '/features' },
   { name: 'About', href: '/about' },

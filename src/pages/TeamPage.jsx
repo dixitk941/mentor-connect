@@ -12,7 +12,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: 'https://www.x.com/dixitk941',
-        linkedin: 'https://github.com/in/dixitk941',
+        linkedin: 'https://github.com/dixitk941',
         instagram: 'https://www.instagram.com/karan_dixit19',
       },
     },
@@ -23,7 +23,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.github.com/in/pratickjaat',
+        linkedin: 'https://www.github.com/pratickjaat',
         instagram: 'https://www.instagram.com/pratick.who',
       },
     },
@@ -34,7 +34,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.github.com/in/dushyantrwt',
+        linkedin: 'https://www.github.com/dushyantrwt',
         instagram: 'https://www.instagram.com/roar_dushyant',
       },
     },
@@ -45,7 +45,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.github.com/in/mayanks023',
+        linkedin: 'https://www.github.com/mayanks023',
         instagram: 'https://www.instagram.com/the_mayanks',
       },
     },
@@ -56,7 +56,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin:  'https://www.github.com/in/laxman43aa',
+        linkedin:  'https://www.github.com/laxman43aa',
         instagram: 'https://www.instagram.com/laxmanrawat__1417',
       },
     },
@@ -67,7 +67,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.github.com/in/pratibha180',
+        linkedin: 'https://www.github.com/pratibha180',
         instagram: 'https://www.instagram.com/pratibha0897',
       },
     },

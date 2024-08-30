@@ -18,7 +18,7 @@ export const teamMembers = [
     },
     {
       name: 'Pratick',
-      role: 'Graphic Design and Firebase Manager',
+      role: 'Graphic Designer and Firebase Manager',
       imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/pratick.jpg?alt=media&token=f377a1ad-f4db-4552-af3e-fd668f41cb87', // Replace with actual image URL
       socialLinks: {
         // facebook: '#',

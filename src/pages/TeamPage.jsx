@@ -21,10 +21,10 @@ export const teamMembers = [
       role: 'Graphic Design and Firebase Manager',
       imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/pratick.jpg?alt=media&token=f377a1ad-f4db-4552-af3e-fd668f41cb87', // Replace with actual image URL
       socialLinks: {
-        facebook: '#',
-        twitter: '#',
-        linkedin: '#',
-        instagram: '#',
+        // facebook: '#',
+        // twitter: '#',
+        linkedin: 'https://www.linkedin.com/in/pratick-jaat-ab3401221',
+        instagram: 'https://www.instagram.com/pratick.who',
       },
     },
     {
@@ -32,10 +32,10 @@ export const teamMembers = [
       role: 'Backend Developer',
       imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/photos%2FKRffhU0fnHUnsEKmIb8Q7gpEjQa2?alt=media&token=3d40af58-eda4-4011-9a9a-38eb72a196bb', // Replace with actual image URL
       socialLinks: {
-        facebook: '#',
-        twitter: '#',
-        linkedin: '#',
-        instagram: '#',
+        // facebook: '#',
+        // twitter: '#',
+        linkedin: 'https://www.linkedin.com/in/dushyant-rawat-a28695306',
+        instagram: 'https://www.instagram.com/roar_dushyant',
       },
     },
     {
@@ -43,10 +43,10 @@ export const teamMembers = [
       role: 'QA & Testing',
       imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/Mayank.jpg?alt=media&token=3d6bad89-5307-4af1-a250-9ae175be403d', // Replace with actual image URL
       socialLinks: {
-        facebook: '#',
-        twitter: '#',
+        // facebook: '#',
+        // twitter: '#',
         linkedin: '#',
-        instagram: '#',
+        instagram: 'https://www.instagram.com/the_mayanks',
       },
     },
     {
@@ -54,21 +54,21 @@ export const teamMembers = [
       role: 'Documentation & Presentation',
       imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/photos%2FPgXWKjB1erSJHjvOkl3mhMDcE1g1?alt=media&token=ed84e562-ba64-4c8b-b36b-25de3158558b', // Replace with actual image URL
       socialLinks: {
-        facebook: '#',
-        twitter: '#',
+        // facebook: '#',
+        // twitter: '#',
         linkedin: '#',
-        instagram: '#',
+        instagram: 'https://www.instagram.com/laxmanrawat__1417',
       },
     },
     {
       name: 'Pratibha',
       role: 'Documentation & Presentation',
-      imgSrc: 'https://photos.google.com/search/_cAF1QipMuVuXyYk~uLx38W8pydQ9IAq13muWcuZQ_/photo/AF1QipNWZDlgBrYlLLd4j7m-XhRqd-3VzEFUem9xB4s', // Replace with actual image URL
+      imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/pratibha.jpg?alt=media&token=9f0d93b8-6075-461b-831e-f69a76af7a5e', // Replace with actual image URL
       socialLinks: {
-        facebook: '#',
-        twitter: '#',
-        linkedin: '#',
-        instagram: '#',
+        // facebook: '#',
+        // twitter: '#',
+        linkedin: 'https://www.linkedin.com/in/pratibha-agrawal-051885313',
+        instagram: 'https://www.instagram.com/pratibha0897',
       },
     },
   ];

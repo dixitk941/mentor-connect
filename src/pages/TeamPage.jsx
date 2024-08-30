@@ -11,8 +11,8 @@ export const teamMembers = [
       imgSrc: 'https://karandixitportfolio.vercel.app/static/images/me1.png', // Replace with actual image URL
       socialLinks: {
         // facebook: '#',
-        twitter: 'https://www.x.com/dixitk941',
-        linkedin: 'https://linkedin.com/in/karan-dixit-7223a628a',
+        // twitter: 'https://www.x.com/dixitk941',
+        linkedin: 'https://github.com/in/dixitk941',
         instagram: 'https://www.instagram.com/karan_dixit19',
       },
     },
@@ -23,7 +23,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.linkedin.com/in/pratick-jaat-ab3401221',
+        linkedin: 'https://www.github.com/in/pratickjaat',
         instagram: 'https://www.instagram.com/pratick.who',
       },
     },
@@ -34,7 +34,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.linkedin.com/in/dushyant-rawat-a28695306',
+        linkedin: 'https://www.github.com/in/dushyantrwt',
         instagram: 'https://www.instagram.com/roar_dushyant',
       },
     },
@@ -45,7 +45,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: '#',
+        linkedin: 'https://www.github.com/in/mayanks023',
         instagram: 'https://www.instagram.com/the_mayanks',
       },
     },
@@ -56,7 +56,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: '#',
+        linkedin:  'https://www.github.com/in/laxman43aa',
         instagram: 'https://www.instagram.com/laxmanrawat__1417',
       },
     },
@@ -67,7 +67,7 @@ export const teamMembers = [
       socialLinks: {
         // facebook: '#',
         // twitter: '#',
-        linkedin: 'https://www.linkedin.com/in/pratibha-agrawal-051885313',
+        linkedin: 'https://www.github.com/in/pratibha180',
         instagram: 'https://www.instagram.com/pratibha0897',
       },
     },

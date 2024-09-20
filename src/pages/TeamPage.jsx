@@ -8,7 +8,7 @@ export const teamMembers = [
     {
       name: 'Karan Dixit',
       role: 'Team Leader & Frontend Developer',
-      imgSrc: 'https://karandixitportfolio.vercel.app/static/images/me1.png', // Replace with actual image URL
+      imgSrc: 'https://firebasestorage.googleapis.com/v0/b/mentorconnect-36696.appspot.com/o/me1.png?alt=media&token=7c36a60e-d7c2-4b95-91e7-e5912c4a072d', // Replace with actual image URL
       socialLinks: {
         // facebook: '#',
         // twitter: 'https://www.x.com/dixitk941',

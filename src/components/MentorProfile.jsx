@@ -39,7 +39,7 @@ const MentorProfile = () => {
     try {
       const meetingLink = generateMeetingLink();
       setMenteeLink(meetingLink);
-
+  
       await addDoc(collection(db, 'appointments'), {
         fullName,
         email,
@@ -52,21 +52,10 @@ const MentorProfile = () => {
         roomID,
         menteeLink: meetingLink,
       });
-
-      const templateParams = {
-        to_name: fullName,
-        to_email: email,
-        message: `Your meeting link: ${meetingLink}`,
-      };
-
-      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams, 'YOUR_USER_ID')
-        .then((response) => {
-          console.log('SUCCESS!', response.status, response.text);
-        }, (err) => {
-          console.log('FAILED...', err);
-        });
-
-      setError('');
+  
+      // Notice about email service unavailability
+      setError('Notice: service is temporarily not available.');
+  
       setFullName('');
       setEmail('');
       setMobileNumber('');
